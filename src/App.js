@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
+import { Tile, HighlightedTile, SelectedTile } from './components/tile';
+import './App.scss';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      selected: ''
+    };
+  }
+
+  onTileClick = (tileNumber) => () => {
+    this.setState(({ selected }) => ({
+      selected: selected === tileNumber ? '' : tileNumber
+    }));
+  };
+
+  isSelected = (value) => value === this.state.selected;
+  isMultiple = (value) => value % this.state.selected === 0;
+
+  render() {
+    const { numberOfTiles } = this.props;
+    return (
+      <div className="App">
+        <ul className="list">
+          {Array.from(Array(numberOfTiles))
+            .map((e, i) => i + 1)
+            .map((val) => {
+              return (
+                <li key={val}>
+                  {this.isSelected(val) ? (
+                    <SelectedTile onClick={this.onTileClick(val)} value={val} />
+                  ) : this.isMultiple(val) ? (
+                    <HighlightedTile
+                      onClick={this.onTileClick(val)}
+                      value={val}
+                    />
+                  ) : (
+                    <Tile onClick={this.onTileClick(val)} value={val} />
+                  )}
+                </li>
+              );
+            })}
+        </ul>
+      </div>
+    );
+  }
 }
+
+App.propTypes = {
+  numberOfTiles: PropTypes.number.isRequired
+};
+
+App.defaultProps = {
+  numberOfTiles: 140
+};
 
 export default App;

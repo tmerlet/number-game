@@ -1,0 +1,22 @@
+$medium-min: 768px;
+$large-min: 992px;
+
+.App {
+  max-width: 200px;
+  margin: 20px auto;
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style-type: none;
+  }
+
+  @media (min-width: $medium-min) {
+    max-width: 500px;
+  }
+
+  @media (min-width: $large-min) {
+    max-width: 700px;
+  }
+}

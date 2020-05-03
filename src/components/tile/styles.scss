@@ -1,0 +1,16 @@
+.tile {
+  font-size: 50px;
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 10px;
+
+  &.highlighted {
+    background-color: red;
+  }
+
+  &.selected {
+    background-color: green;
+  }
+}
